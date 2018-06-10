@@ -36,8 +36,8 @@ if(isset($_POST['submit'])){
     $username = trim($_POST['username']);
     //save email in the session
     $_SESSION['username'] = $username;
-    $password = trim($_POST['password']);                                  //This section checks the password hash in the db
-    $sql = "SELECT * FROM users WHERE username = '".$username."';";        // against the password the user has typed in
+    $password = trim($_POST['pswd']);                                  //This section checks the password hash in the db
+    $sql = "SELECT * FROM users WHERE username = '$username';";        // against the password the user has typed in
     $combine = mysqli_query($mysqli, $sql);
     $numRows = mysqli_num_rows($combine);
     if($numRows  == 1){
