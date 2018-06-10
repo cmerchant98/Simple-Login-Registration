@@ -43,7 +43,7 @@ if(isset($_POST['submit'])){
     if($numRows  == 1){
         $row = mysqli_fetch_assoc($combine);
         if(password_verify($password, $row['password'])){
-            header('Location: register.php');
+            header('Location: dashboard.php');
             exit();
         }
         else{
