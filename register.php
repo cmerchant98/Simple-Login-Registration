@@ -44,6 +44,7 @@ if($password == $cPassword){
     $stmt->execute();               //Compare the Password with Confirm Password
     $stmt->close();                 //If they match insert account into db.
     header('Location: dashboard.php');
+    exit();
 }else{
     echo 'Passwords do not match';
 }
