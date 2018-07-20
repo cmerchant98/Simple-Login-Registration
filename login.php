@@ -1,5 +1,7 @@
 <?php
+
 include_once 'conn.php';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,26 +34,25 @@ include_once 'conn.php';
     </div>
 </form>
 <?php
-if(isset($_POST['submit'])){
+if(isset($_POST['submit'])) {
+
+    $password = trim($_POST['pwd']);
     $username = trim($_POST['username']);
-    //save email in the session
-    $_SESSION['username'] = $username;
-    $password = trim($_POST['pswd']);                                  //This section checks the password hash in the db
-    $sql = "SELECT * FROM users WHERE username = '$username';";        // against the password the user has typed in
-    $combine = mysqli_query($mysqli, $sql);
-    $numRows = mysqli_num_rows($combine);
-    if($numRows  == 1){
-        $row = mysqli_fetch_assoc($combine);
-        if(password_verify($password, $row['password'])){
-            header('Location: dashboard.php');
-            exit();
+    $stmt = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $_POST['username']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $numRows = $result->num_rows;
+    if ($numRows === 1) {
+        while ($row = $result->fetch_assoc()) {
+            if (password_verify($password, $row['pwd'])) {
+                header('Location: dashboard.php');
+                $stmt->close();
+                $mysqli->close();
+            } else {
+                echo "Your username or password do not match";
+            }
         }
-        else{
-            echo "Either your email or password are incorrect. Please try again.";
-        }
-    }
-    else{
-        echo "No User found";
     }
 }
 ?>
