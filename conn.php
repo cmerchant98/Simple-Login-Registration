@@ -13,9 +13,10 @@ $mysqli = new mysqli($db_route, $db_user, $db_pass, $db_name, $db_port);
 //If connection works, proceed and show success. If not, show error.
 if($mysqli->connect_error) {
     die("connection failed: " . $mysqli->connect_error);
-}
+} else {
 //echo "Connection Successful!";
 //echo "Host Information: ". mysqli_get_host_info($mysqli) . PHP_EOL;
+}
 
 //Start User Session
 session_start();
